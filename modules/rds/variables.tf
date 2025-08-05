@@ -33,3 +33,9 @@ variable "environment" {
   description = "Environment name (dev, qa, prod)"
   type        = string
 }
+
+variable "create_iam_role" {
+  description = "Whether to create the RDS monitoring IAM role"
+  type        = bool
+  default     = false
+}
