@@ -72,9 +72,9 @@ module "alerts" {
 }
 
 data "http" "my_ip" {
-  url = "http://ifconfig.me/ip"
+  url = "https://ipv4.icanhazip.com"
 }
 
 locals {
-  my_ip_cidr = "${chomp(data.http.my_ip.body)}/32"
+  my_ip_cidr = "${chomp(data.http.my_ip.response_body)}/32"
 }
