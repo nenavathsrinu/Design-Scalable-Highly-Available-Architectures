@@ -47,3 +47,8 @@ variable "key_name" {
   description = "Name of the EC2 key pair"
   type        = string
 }
+variable "create_iam_role" {
+  description = "Conditionally create IAM role for RDS monitoring"
+  type        = bool
+  default     = false
+}

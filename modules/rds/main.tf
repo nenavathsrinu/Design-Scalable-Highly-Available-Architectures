@@ -109,10 +109,40 @@ resource "aws_db_instance" "myapp_rds" {
   performance_insights_enabled    = true
   enabled_cloudwatch_logs_exports = ["slowquery", "error", "general"]
 
+
   depends_on = [aws_db_parameter_group.mysql_custom]
 
   tags = merge(
     { Name = "myapp-rds-${var.environment}" },
     var.common_tags
   )
+}
+
+resource "aws_iam_role" "rds_monitoring" {
+  count = var.create_iam_role ? 1 : 0
+
+  name = "rds-monitoring-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "monitoring.rds.amazonaws.com"
+        },
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+
+  tags = merge(
+    { Name = "rds-monitoring-role" },
+    var.common_tags
+  )
+}
+resource "aws_iam_role_policy_attachment" "monitoring_attach" {
+  count      = var.create_iam_role ? 1 : 0
+  role       = aws_iam_role.rds_monitoring[0].name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
 }

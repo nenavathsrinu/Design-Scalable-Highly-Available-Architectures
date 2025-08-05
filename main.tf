@@ -42,7 +42,7 @@ module "rds" {
   password      = var.rds_password
   environment   = var.environment
   common_tags   = local.common_tags
-  create_iam_role = true  # Only pass it to the module
+  create_iam_role   = var.create_iam_role
 }
 
 module "app" {
