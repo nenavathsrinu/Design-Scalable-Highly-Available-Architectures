@@ -2,7 +2,7 @@ data "aws_ami" "amazon_linux" {
   most_recent = true
   owners      = ["amazon"]
 
-  filter {
+  filter {  
     name   = "name"
     values = ["amzn2-ami-hvm-*-x86_64-gp2"]
   }
@@ -37,7 +37,7 @@ resource "aws_instance" "app_ec2" {
   instance_type          = "t3.micro"
   subnet_id              = var.private_subnet_ids[0]
   vpc_security_group_ids = [var.app_sg_id]
-  key_name               = "vpn"
+  key_name               = var.key_name  # This must be valid in selected region
 
   user_data = <<-EOF
               #!/bin/bash

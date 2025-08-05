@@ -9,3 +9,4 @@ rds_username       = "admin"
 create_iam_role = true
 rds_password       = "QaSecretPassword123!"
 ami_id = "ami-03b322c510c7cf8e3"  # Replace with region-specific Amazon Linux 2 AMI
+key_name = "project"

@@ -26,3 +26,8 @@ variable "rds_password" {
 variable "common_tags" {
   type = map(string)
 }
+
+variable "key_name" {
+  description = "EC2 Key Pair Name"
+  type        = string
+}
