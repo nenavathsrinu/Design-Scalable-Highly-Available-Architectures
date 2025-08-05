@@ -1,0 +1,10 @@
+aws_region         = "us-west-2"
+vpc_cidr           = "10.1.0.0/16"
+public_subnet_cidr = "10.1.1.0/24"
+private_app_cidr   = "10.1.2.0/24"
+private_db_cidr    = "10.1.5.0/24"
+environment        = "qa"
+instance_type      = "t3.medium"
+rds_username       = "admin"
+rds_password       = "QaSecretPassword123!"
+ami_id = "ami-03b322c510c7cf8e3"  # Replace with region-specific Amazon Linux 2 AMI
