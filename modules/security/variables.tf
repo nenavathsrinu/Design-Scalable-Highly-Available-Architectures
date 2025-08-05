@@ -13,6 +13,6 @@ variable "common_tags" {
   type        = map(string)
 }
 variable "ssh_cidr" {
+  description = "Allowed SSH CIDR"
   type        = string
-  description = "CIDR block allowed to SSH"
 }

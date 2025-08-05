@@ -70,3 +70,11 @@ module "alerts" {
   web_asg_name   = module.web.asg_name
   common_tags    = local.common_tags
 }
+
+data "http" "my_ip" {
+  url = "http://ifconfig.me/ip"
+}
+
+locals {
+  my_ip_cidr = "${chomp(data.http.my_ip.body)}/32"
+}
