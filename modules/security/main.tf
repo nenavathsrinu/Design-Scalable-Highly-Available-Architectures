@@ -66,6 +66,13 @@ resource "aws_security_group" "app_sg" {
   }
 
   ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [local.my_ip_cidr]
+  }
+
+  ingress {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
@@ -80,4 +87,12 @@ resource "aws_security_group" "app_sg" {
   }
 
   tags = merge(var.common_tags, { Name = "app-sg" })
+}
+
+data "http" "my_ip" {
+  url = "http://ifconfig.me/ip"
+}
+
+locals {
+  my_ip_cidr = "${chomp(data.http.my_ip.body)}/32"
 }
