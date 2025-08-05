@@ -4,12 +4,10 @@ pipeline {
     parameters {
         choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'stg', 'prod'], description: 'Choose the environment')
         choice(name: 'ACTION', choices: ['plan', 'apply', 'destroy'], description: 'Terraform action to perform')
-        string(name: 'AWS_REGION', defaultValue: 'ap-south-1', description: 'AWS region')
     }
 
     environment {
         TF_VAR_environment = "${params.ENVIRONMENT}"
-        TF_VAR_aws_region  = "${params.AWS_REGION}"
     }
 
     stages {
@@ -22,7 +20,7 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                withAWS(credentials: 'aws-credentials', region: "${params.AWS_REGION}") {
+                withAWS(credentials: 'aws-credentials') {
                     dir("${WORKSPACE}") {
                         bat "terraform init -backend-config=env\\\\${params.ENVIRONMENT}\\\\backend.tfvars"
                     }
@@ -33,7 +31,7 @@ pipeline {
         stage('Terraform Plan') {
             when { expression { return params.ACTION == 'plan' } }
             steps {
-                withAWS(credentials: 'aws-credentials', region: "${params.AWS_REGION}") {
+                withAWS(credentials: 'aws-credentials') {
                     dir("${WORKSPACE}") {
                         bat "terraform plan -var-file=env\\\\${params.ENVIRONMENT}\\\\terraform.tfvars"
                     }
@@ -44,7 +42,7 @@ pipeline {
         stage('Terraform Apply Launch Template') {
             when { expression { return params.ACTION == 'apply' } }
             steps {
-                withAWS(credentials: 'aws-credentials', region: "${params.AWS_REGION}") {
+                withAWS(credentials: 'aws-credentials') {
                     dir("${WORKSPACE}") {
                         bat "terraform apply -auto-approve -target=aws_launch_template.web -var-file=env\\\\${params.ENVIRONMENT}\\\\terraform.tfvars"
                     }
@@ -55,7 +53,7 @@ pipeline {
         stage('Terraform Apply Rest of Infrastructure') {
             when { expression { return params.ACTION == 'apply' } }
             steps {
-                withAWS(credentials: 'aws-credentials', region: "${params.AWS_REGION}") {
+                withAWS(credentials: 'aws-credentials') {
                     dir("${WORKSPACE}") {
                         bat "terraform apply -auto-approve -var-file=env\\\\${params.ENVIRONMENT}\\\\terraform.tfvars"
                     }
@@ -66,7 +64,7 @@ pipeline {
         stage('Terraform Destroy') {
             when { expression { return params.ACTION == 'destroy' } }
             steps {
-                withAWS(credentials: 'aws-credentials', region: "${params.AWS_REGION}") {
+                withAWS(credentials: 'aws-credentials') {
                     dir("${WORKSPACE}") {
                         bat "terraform destroy -auto-approve -var-file=env\\\\${params.ENVIRONMENT}\\\\terraform.tfvars"
                     }
@@ -77,7 +75,7 @@ pipeline {
 
     post {
         always {
-            echo "✅ Terraform '${params.ACTION}' completed for environment: '${params.ENVIRONMENT}' in region '${params.AWS_REGION}'"
+            echo "✅ Terraform '${params.ACTION}' completed for environment: '${params.ENVIRONMENT}'"
         }
     }
 }
