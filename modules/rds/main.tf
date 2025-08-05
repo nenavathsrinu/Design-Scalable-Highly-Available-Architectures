@@ -27,7 +27,7 @@ resource "aws_iam_role" "rds_monitoring" {
 
 resource "aws_iam_role_policy_attachment" "monitoring_attach" {
   count      = var.create_iam_role ? 1 : 0
-  role       = aws_iam_role.rds_monitoring[0].name
+  role = try(aws_iam_role.rds_monitoring[0].name, null)
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
 }
 
