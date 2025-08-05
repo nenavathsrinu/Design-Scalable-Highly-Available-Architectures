@@ -22,7 +22,7 @@ module "web" {
   web_sg_id         = module.security.web_sg_id
   instance_type     = var.instance_type
   ami_id            = var.ami_id
-  environment       = var.environment
+  environment       = var.environment 
   common_tags       = local.common_tags
 }
 

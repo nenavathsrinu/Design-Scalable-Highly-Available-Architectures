@@ -12,7 +12,8 @@ variable "common_tags" {
   description = "Tags to apply to all security groups"
   type        = map(string)
 }
+
 variable "ssh_cidr" {
-  description = "Allowed SSH CIDR"
+  description = "CIDR block allowed to SSH"
   type        = string
 }

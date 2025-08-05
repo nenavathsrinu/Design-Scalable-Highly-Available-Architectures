@@ -88,11 +88,3 @@ resource "aws_security_group" "app_sg" {
 
   tags = merge(var.common_tags, { Name = "app-sg" })
 }
-
-data "http" "my_ip" {
-  url = "http://ifconfig.me/ip"
-}
-
-locals {
-  my_ip_cidr = "${chomp(data.http.my_ip.body)}/32"
-}

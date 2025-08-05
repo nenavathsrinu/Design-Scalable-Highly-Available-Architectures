@@ -53,7 +53,3 @@ variable "create_iam_role" {
   default     = false
 }
 
-variable "ssh_cidr" {
-  type        = string
-  description = "CIDR block allowed to SSH"
-}
