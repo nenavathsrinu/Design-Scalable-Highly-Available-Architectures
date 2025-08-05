@@ -46,15 +46,16 @@ resource "aws_instance" "app_ec2" {
               systemctl enable docker
               systemctl start docker
               usermod -a -G docker ec2-user
+
               git clone https://github.com/nenavathsrinu/sample-node-app.git /home/ec2-user/app
               cd /home/ec2-user/app
               docker build -t app .
 
               docker run -d -p 3000:3000 \
-                -e DB_HOST="${var.rds_endpoint}" \
-                -e DB_PORT=3306 \
-                -e DB_USER="${var.rds_username}" \
-                -e DB_PASS="${var.rds_password}" \
+              -e DB_HOST="${var.rds_endpoint}" \
+              -e DB_PORT=3306 \
+              -e DB_USER="${var.rds_username}" \
+              -e DB_PASS="${var.rds_password}" \
                 app
               EOF
 
