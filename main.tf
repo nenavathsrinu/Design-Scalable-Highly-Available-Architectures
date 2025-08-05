@@ -54,6 +54,7 @@ module "app" {
   rds_username        = local.rds_creds.username
   rds_password        = local.rds_creds.password
   common_tags         = local.common_tags
+  key_name            = var.key_name
 }
 
 module "monitoring" {

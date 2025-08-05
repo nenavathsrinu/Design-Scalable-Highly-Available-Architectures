@@ -43,3 +43,7 @@ variable "ami_id" {
   description = "AMI ID to use for EC2 instances in launch template"
   type        = string
 }
+variable "key_name" {
+  description = "Name of the EC2 key pair"
+  type        = string
+}

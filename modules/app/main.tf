@@ -38,7 +38,6 @@ resource "aws_instance" "app_ec2" {
   subnet_id              = var.private_subnet_ids[0]
   vpc_security_group_ids = [var.app_sg_id]
   key_name               = var.key_name  # This must be valid in selected region
-
   user_data = <<-EOF
               #!/bin/bash
               sudo su -
@@ -47,7 +46,6 @@ resource "aws_instance" "app_ec2" {
               systemctl enable docker
               systemctl start docker
               usermod -a -G docker ec2-user
-
               git clone https://github.com/nenavathsrinu/sample-node-app.git /home/ec2-user/app
               cd /home/ec2-user/app
               docker build -t app .
