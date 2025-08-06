@@ -1,4 +1,4 @@
-aws_region         = "ap-south-1"
+aws_region         = "us-west-1"
 vpc_cidr           = "10.2.0.0/16"
 public_subnet_cidr = "10.2.1.0/24"
 private_app_cidr   = "10.2.2.0/24"
@@ -7,3 +7,6 @@ environment        = "stg"
 instance_type      = "t3.medium"
 rds_username       = "admin"
 rds_password       = "StgSecretPassword123!"
+key_name           = "stg"
+ami_id            = "ami-0c55b159cbfafe1f0"  # Replace with region-specific Amazon Linux 2 AMI
+create_iam_role    = true
