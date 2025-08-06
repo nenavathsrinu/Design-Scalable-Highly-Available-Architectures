@@ -8,5 +8,5 @@ instance_type      = "t3.medium"
 rds_username       = "admin"
 rds_password       = "StgSecretPassword123!"
 key_name           = "stg"
-ami_id            = "ami-0c55b159cbfafe1f0"  # Replace with region-specific Amazon Linux 2 AMI
+ami_id            = "ami-05d3fca72a856bc63"  # Replace with region-specific Amazon Linux 2 AMI
 create_iam_role    = true
